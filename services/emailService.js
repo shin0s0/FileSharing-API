@@ -15,5 +15,5 @@ export const sendMail = async ({from ,to ,subject, text, html})=>{
         subject,
         text,
         html
-    })
-}
+    });
+};

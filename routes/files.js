@@ -4,7 +4,7 @@ import path from "path";
 import {v4 as uuid4} from "uuid";
 import { File } from "../models/files.js";
 import { sendMail } from "../services/emailservice.js";
-import { emailTemplate } from "../services/emailTemplate.js";
+import { emailTemplate } from "../services/emailtemplate.js";
 
  const router = express.Router();
  
