@@ -46,13 +46,14 @@ router.post("/",(req,res)=>{
 
 });
 
-router.get("/send",async (req,res)=>{
-        const  { emailFrom , emailTo , uuid} =req.body;
+router.post("/send",async (req,res)=>{
+        const { uuid, emailTo, emailFrom } = req.body;
         if( !uuid ||!emailTo || !emailFrom) return res.status(422).send({ error: "All fields are required"});
 
+       try{  
         const file= await File.findOne({ uuid: uuid});
-        if(file.sender) return res.status(422).send({ error: "Email already sent"});
-
+        if(file.sender) return res.status(422).send({ error: "Email already sent once"});
+       
         file.sender = emailFrom;
         file.reciever= emailTo;
         const response = await file.save();
@@ -69,8 +70,14 @@ router.get("/send",async (req,res)=>{
                 expires: "24 hours"
             })
            
-        });
-        return res.send({success:true});
+        }).then(() => {
+            return res.json({success: true});
+          }).catch(err => {
+            return res.status(500).json({error: 'Error in email sending.'});
+          });
+      } catch(err) {
+        return res.status(500).send({ error: 'Something went wrong.'});
+      }
 });
 
 export default router;
