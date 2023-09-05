@@ -47,7 +47,7 @@ router.post("/",(req,res)=>{
 });
 
 router.get("/send",async (req,res)=>{
-        const  { uuid, emailTo , emailFrom} =req.body;
+        const  { emailFrom , emailTo , uuid} =req.body;
         if( !uuid ||!emailTo || !emailFrom) return res.status(422).send({ error: "All fields are required"});
 
         const file= await File.findOne({ uuid: uuid});
