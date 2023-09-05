@@ -6,6 +6,7 @@ import showRouter from "./routes/show.js";
 import downloadRouter from "./routes/download.js";
 import path from "path";
 import cors from "cors";
+import { scheduleTask } from "./cron.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,6 +16,7 @@ config({
 });
 
 connectDB();
+
 
 const corsOptions={
   origin: process.env.ALLOWED_CLIENTS.split(",")
@@ -32,6 +34,7 @@ app.use("/api/files", filesRouter);
 app.use("/files", showRouter);
 app.use("/files/download",downloadRouter);
 
+scheduleTask();
 app.listen(PORT, () => {
   console.log(`Server is running on Port: ${PORT}`);
 });
