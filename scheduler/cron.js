@@ -3,8 +3,8 @@ import shell from "shelljs";
 
 
 export const scheduleTask = () =>{
-    const task = cron.schedule("0 0 * * *", () => {
-        const scriptPath = "./delete.js"; 
+    const task = cron.schedule("* * * * * *", () => {
+        const scriptPath = "./scheduler/delete.js"; 
         const result = shell.exec(`node ${scriptPath}`);
 
         if (result.code !== 0) {

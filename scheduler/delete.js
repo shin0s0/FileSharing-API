@@ -1,6 +1,6 @@
-import { File } from "./models/files.js";
+import { File } from "../models/files.js";
 import fs from "fs";
-import { connectDB } from "./data/database.js";
+import { connectDB } from "../data/database.js";
 
 connectDB();
 

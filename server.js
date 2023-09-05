@@ -6,7 +6,7 @@ import showRouter from "./routes/show.js";
 import downloadRouter from "./routes/download.js";
 import path from "path";
 import cors from "cors";
-import { scheduleTask } from "./cron.js";
+import { scheduleTask } from "./scheduler/cron.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
