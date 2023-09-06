@@ -1,17 +1,26 @@
 import cron from "node-cron";
-import shell from "shelljs";
-
+import {spawn} from "child_process";
 
 export const scheduleTask = () =>{
     const task = cron.schedule("0 0 * * *", () => {
         const scriptPath = "./scheduler/delete.js"; 
-        const result = shell.exec(`node ${scriptPath}`);
+        const childProcess = spawn("node", [scriptPath]);
 
-        if (result.code !== 0) {
-            console.error(`Script execution failed with code ${result.code}`);
-        } else {
-            console.log(`Script executed successfully`);
-        }
+        childProcess.stdout.on("data", (data) => {
+            console.log(`Script output: ${data}`);
+        });
+
+        childProcess.stderr.on("data", (error) => {
+            console.error(`Script error: ${error}`);
+        });
+
+        childProcess.on("close", (code) => {
+            if (code === 0) {
+                console.log("Script executed successfully.");
+            } else {
+                console.error(`Script exited with code ${code}`);
+            }
+        });
     });
     task.start();
 }
