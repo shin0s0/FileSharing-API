@@ -19,7 +19,7 @@ connectDB();
 
 
 const corsOptions={
-  origin: process.env.ALLOWED_CLIENTS.split(",")
+  origin: ["http://localhost:3000","https://shin0s0.github.io"]
 }
 
 app.use(cors(corsOptions));
